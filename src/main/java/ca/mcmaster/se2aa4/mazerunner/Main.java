@@ -68,14 +68,16 @@ public class Main {
     }
 
     private boolean pathVerify(String path){ //processes the maze with given path and returns a boolean representing whether or not path is valid
-        /**int lines = maze.size();
-        String path = "";
+        int lines = maze.size();
+        int len = 0;
         int current_line = 0;
+        int current_col = 0;
+        String item = "";
         boolean valid_path = false;
-    
+
         for (int i=0; i<lines; i++){
-            String item = maze.get(i);
-            int len = item.length();
+            item = maze.get(i);
+            len = item.length();
 
             if (item.charAt(0) == '#'){
                 logger.info("**** no entrance, pass");
@@ -86,18 +88,25 @@ public class Main {
                 current_line = i;
                 i=lines;
             }
-
         }
         
-        for (int j=0; j < path.length(); j++){ //traversing 
-            item = maze.get(current_line);
+        //while (current_col < len && current_line < lines){
+        item = maze.get(current_line);
+    
+        for (int j=0; j<path.length(); j++){
             if (path.charAt(j) == 'F'){
-                current_line;    
+                if (item.charAt(current_col) == ' '){
+                    current_col++;
+                }
             }
+        }      
+        //}
+        
+        if (current_col == len){
+            valid_path = true;
         }
 
-        return valid_path;**/
-        return true;
+        return valid_path;
     }
 
     public static void main(String[] args) { //process args and provide UI statements
@@ -119,6 +128,7 @@ public class Main {
 
                 if (cmd.hasOption("p")){
                     boolean valid = m.pathVerify(args[3]);
+                    System.out.println(valid);
                 }
                     
                 else {
