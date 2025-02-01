@@ -33,31 +33,16 @@ public class Main {
         }
     }
 
-    private String pathFinder(){ //processes string and returns its canonical path
-        int lines = maze.size();
-        int len = 0;
-        int current_line = 0;
+    private String pathFinder(int entry_line){ //processes string and returns its canonical path
         String path = "";
-        String item = "";
-
-        for (int i=0; i<lines; i++){
-            item = maze.get(i);
-            len = item.length();
-
-            if (item.charAt(0) == '#'){
-                logger.info("**** no entrance, pass");
-            }
-
-            else{
-                logger.info("**** entrance found!");
-                current_line = i;
-                i=lines;
-            }
-        }
+        String row = maze.get(entry_line);
+        int lines = maze.size();
+        int len = row.length();
+        int line_num = entry_line;
         
         for (int j=0; j<len; j++){
-            item = maze.get(current_line);
-            if (item.charAt(j) == ' '){
+            row = maze.get(line_num);
+            if (row.charAt(j) == ' '){
                 path = path + "F";
             }
             //add else statement accounting for turns 
@@ -67,35 +52,19 @@ public class Main {
 
     }
 
-    private boolean pathVerify(String path){ //processes the maze with given path and returns a boolean representing whether or not path is valid
-        int lines = maze.size();
-        int len = 0;
-        int current_line = 0;
-        int current_col = 0;
-        String item = "";
+    private boolean pathVerify(String path, int entry_line){ //processes the maze with given path and returns a boolean representing whether or not path is valid
+        String row = maze.get(entry_line);
         boolean valid_path = false;
-
-        for (int i=0; i<lines; i++){
-            item = maze.get(i);
-            len = item.length();
-
-            if (item.charAt(0) == '#'){
-                logger.info("**** no entrance, pass");
-            }
-
-            else{
-                logger.info("**** entrance found!");
-                current_line = i;
-                i=lines;
-            }
-        }
+        int lines = maze.size();
+        int len = row.length();
+        int current_line = entry_line;
+        int current_col = 0;
         
         //while (current_col < len && current_line < lines){
-        item = maze.get(current_line);
     
         for (int j=0; j<path.length(); j++){
             if (path.charAt(j) == 'F'){
-                if (item.charAt(current_col) == ' '){
+                if (row.charAt(current_col) == ' '){
                     current_col++;
                 }
             }
@@ -107,6 +76,30 @@ public class Main {
         }
 
         return valid_path;
+    }
+
+    private int findEntrance(){
+        int lines = maze.size();
+        int len = 0;
+        int entry_line = 0;
+        String row = "";
+
+        for (int i=0; i<lines; i++){
+            row = maze.get(i);
+            len = row.length();
+
+            if (row.charAt(0) == '#'){
+                logger.info("**** no entrance, pass");
+            }
+
+            else{
+                logger.info("**** entrance found!");
+                entry_line = i;
+                i=lines;
+            }
+        }
+
+        return entry_line;
     }
 
     public static void main(String[] args) { //process args and provide UI statements
@@ -125,15 +118,16 @@ public class Main {
             if (cmd.hasOption("i")){
                 logger.info("**** Reading the maze from file", args[1]);
                 m.fileProcessor(args[1]);
+                int entry_line = m.findEntrance(); 
 
                 if (cmd.hasOption("p")){
-                    boolean valid = m.pathVerify(args[3]);
+                    boolean valid = m.pathVerify(args[3], entry_line);
                     System.out.println(valid);
                 }
                     
                 else {
                     logger.info("**** Computing path"); //info
-                    String path = m.pathFinder();
+                    String path = m.pathFinder(entry_line);
                     System.out.println(path);
                 }
 

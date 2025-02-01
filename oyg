@@ -1,0 +1,41 @@
+[33mcommit dc3dce367e87d05b626b731ef03a49ec65a68a5e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;33mtag: [m[1;33mmvp[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Suzanne <abduls61@mcmaster.ca>
+Date:   Fri Jan 24 21:34:30 2025 -0500
+
+    closes #8, closes #7; STEP 4: minor changes to pathfinder method and added path verification feature
+
+[33mcommit 86ef1d76c768ba8789953ba6217cb25cfd7af9dc[m
+Author: Suzanne <abduls61@mcmaster.ca>
+Date:   Fri Jan 24 18:23:29 2025 -0500
+
+    closes #4; STEP 4: added pathfinder functionality and added more descipritive logger messages
+
+[33mcommit 540723a77e9f91e4fe0c89860ffacaa5edacc770[m
+Author: Suzanne <abduls61@mcmaster.ca>
+Date:   Wed Jan 22 20:26:17 2025 -0500
+
+    STEP 2: introduced function definitions and walking skeleton in main, commented out template code
+
+[33mcommit 1200c3c3e06d44be0cc087d15b0bd2e13a05d901[m[33m ([m[1;33mtag: [m[1;33mt01[m[33m)[m
+Author: Suzanne <abduls61@mcmaster.ca>
+Date:   Sun Jan 19 01:06:20 2025 -0500
+
+    STEP 1: pom edit, argument parsing added and logger integrated into code
+
+[33mcommit 4c7fdceb87555bf7292479590ee49e6d57bff569[m
+Author: Istvan David <david-istvan@users.noreply.github.com>
+Date:   Tue Jan 14 18:18:33 2025 -0500
+
+    Update README.md
+
+[33mcommit a7f64b40a75f45a0d89ee5aab0159f4f585ef12e[m
+Author: Sébastien Mosser <sebastien.mosser@gmail.com>
+Date:   Fri Jan 5 16:38:26 2024 -0500
+
+    initial starter code
+
+[33mcommit 23cc89482b1358ad81dd0252e8b07232c0c67bee[m
+Author: Sébastien Mosser <sebastien.mosser@gmail.com>
+Date:   Fri Jan 5 12:36:23 2024 -0500
+
+    Initial commit
