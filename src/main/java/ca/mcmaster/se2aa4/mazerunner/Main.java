@@ -11,17 +11,15 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLineParser;
 
-enum Direction {
-        UP, DOWN, FORWARD, BACKWARD;
-}
-
 public class Main {
-    ArrayList<String> maze = new ArrayList<String>();
-    Direction d = Direction.FORWARD;
+    //this array list is used to store the maze read in from the file
+    private ArrayList<String> maze = new ArrayList<String>(); 
 
+    //logger object is created at this stage
     private static final Logger logger = LogManager.getLogger();
 
-    private void fileProcessor(String filename){ //reads file and assigns to maze variable 
+    //the fileProcessor method reads in all lines from the input file, and assigns each line to an index in the maze ArrayList
+    private void fileProcessor(String filename){
         String line;
         
         try {
@@ -31,130 +29,125 @@ public class Main {
                 maze.add(line);
             }  
             
-        } catch(Exception e) {
+        } catch(Exception e) { //if file does not exist, expection is thrown
             logger.error("/!\\ An error has occured /!\\");
-            System.out.println("PATH NOT COMPUTED"); //info
+            System.out.println("PATH NOT COMPUTED"); 
         }
     }
 
+    //the makeMove method uses the right-hand rule to determine the next move the user should make, depending on the right and front tiles
+    //accepts the right tile and next tile as char arguments to evaluate moves
     private String makeMove(char right_tile, char next_tile){
-        if (right_tile == '#'){
-            if (next_tile == ' '){
+        if (right_tile == '#'){ 
+            if (next_tile == ' '){ //if the right tile is a wall, and the next tile is not a wall, move forward
                 return "F";
             }
 
-            else {
-                return "L";
+            else { //if the right tile is a wall, and the next tile is also a wall, turn left
+                return "L"; 
             }
         }
 
-        else {
+        else { //if the right tile is not a wall, turn right and move forward by one 
             return "RF";
         }
     }
 
-    /**algorithm notes:
-     *  1) we need to have an empty space in front of us to move forward in all cases
-     *  2) we need a wall on our right to move forward at all times, except when turning a corner
-     *      (just turned and no wall in front of us)
-     * 
-     * ideas:
-     * - need cases: move forward, turn around - could be if else statements in a method accepting relevant test condition variables
-     *  
-     * **/
-
+    //the pathfinder method uses the makeMove method to find a path through the maze
+    //accepts the entry row number as an argument
     private String pathFinder(int row_num){
-        String path = "F";
-        String row = maze.get(row_num);
-        String row_above;
-        String row_below;
-        String move;
-        int len = row.length();
-        int j = 0;
-        int direction = 1; //1 = forward, 2 = up, 3 = down, 4 back
+        String path = "F"; //the path always starts with F, to account for indexing issues
+        
+        String row = maze.get(row_num); //row value is assigned to the index of the starting row
 
+        String row_above; //represents the line directly above row
+
+        String row_below; //represents the line directly below row
+
+        String move; //holds the move returned from the makeMove method
+
+        int len = row.length(); //represents the length of all rows in the maze
+
+        int j = 0; //represents the column we're currently on in the array
+
+        int direction = 1; //1 = forward/right, 2 = up, 3 = down, 4 = back/left
+
+        //program loops until reaching the end of the maze
         while (j<len-1){
+            //row values are updated on each run of the loop as we move through the maze
             row = maze.get(row_num);
             row_below = maze.get(row_num+1);
             row_above = maze.get(row_num-1);
 
-            if (direction == 1){
-                move = this.makeMove(row_below.charAt(j), row.charAt(j+1));
-                path = path + move;
+            if (direction == 1){ //if currently facing forward
+                move = this.makeMove(row_below.charAt(j), row.charAt(j+1)); //determine move using makeMove method
+                path = path + move; //add move to path string
+
                 if (move.equals("F")){
-                    j++;
-                    logger.info("**** moving forward");
+                    j++; //current position moves to the right by one
                 }
 
-                else if (move.charAt(0) == 'R'){
+                else if (move.charAt(0) == 'R'){ //right is always accomponied by forward direction, so we change direction and move down
                     direction = 3;
                     row_num++;
-                    logger.info("**** turning and moving down");
                 }
 
-                else {
+                else { //if char is 'L', turn upwards
                     direction = 2;
-                    logger.info("**** turning up");
                 }
             }
 
-            else if (direction == 2){
+            else if (direction == 2){ //if currently facing up
                 move = this.makeMove(row.charAt(j+1), row_above.charAt(j));
                 path = path + move;
+
                 if (move.equals("F")){
-                    row_num--;
-                    logger.info("**** moving up");
+                    row_num--; //current position moves one row up
                 }
 
                 else if (move.charAt(0) == 'R'){
                     direction = 1;
-                    j++;
-                    logger.info("**** turning and moving right");
+                    j++; //turn right and move to the right by one
                 }
 
                 else {
-                    direction = 4;
-                    logger.info("**** turning left");
+                    direction = 4; //turn to the left
                 }
             }
 
-            else if (direction == 3){
+            else if (direction == 3){ //if currently facing down
                 move = this.makeMove(row.charAt(j-1), row_below.charAt(j));
                 path = path + move;
+
                 if (move.equals("F")){
-                    row_num++;
-                    logger.info("**** moving down");   
+                    row_num++; //current position moves down by one row 
                 }
 
                 else if (move.charAt(0) == 'R'){
                     direction = 4;
-                    j--;
-                    logger.info("**** turning and moving left");
+                    j--; //turn left and move to the left by one
                 }
 
                 else {
-                    direction = 1;
-                    logger.info("**** turning right");
+                    direction = 1; //turn to the right
                 }
             }
 
-            else if (direction == 4){
+            else if (direction == 4){ //if currently facing backwards
                 move = this.makeMove(row_above.charAt(j), row.charAt(j-1));
                 path = path + move;
+
                 if (move.equals("F")){
-                    j--;
-                    logger.info("**** moving left");
+                    j--; //current position moves moves to the left by one
                 }
                 
                 else if (move.charAt(0) == 'R'){
                     direction = 2;
-                    row_num--;
-                    logger.info("**** turning and moving up");
+                    row_num--; //turn up and move up one row
                 }
 
                 else {
-                    direction = 3;
-                    logger.info("**** turning down");
+                    direction = 3; //turn downwards
                 }
             }
         }
@@ -162,49 +155,58 @@ public class Main {
         return path;
     }
 
+    //pathVerify method takes in the entry line and a path given by the user and returns a boolean representing if the path is legit or not
     private boolean pathVerify(String path, int row_num){
+        //see pathFinder method for in-depth descriptions of variables
         String row = maze.get(row_num);
         String row_above;
         String row_below;
         char move;
         int len = row.length();
         int direction = 1; //1 = forward, 2 = up, 3 = down, 4 back
-        int current_col = 0;
+        int current_col = 0; //equivalent to 'j' in pathFinder
 
+        //for loop indexes through all chars in the given path
         for (int j=0; j<path.length(); j++){
-            move = path.charAt(j);
+            //all variables are updated
+            move = path.charAt(j); //current move is char at index j
             row = maze.get(row_num);
             row_below = maze.get(row_num+1);
             row_above = maze.get(row_num-1);
 
+            //if incompatible characters are found in the path it is automatically deemed invalid, return false
             if (move != 'F' && move != 'R' && move != 'L' && move != ' '){
                 return false;
             }
 
+            //if we can make it to the end of the maze using the path, it is valid, return true
             if (current_col == len-2){
                 return true;
             }
 
+            //if we exit through the start of the maze, path is invalid
             else if (current_col < 0){
                 return false;
             }
+
+            /**each if statement block checks for F, R, and L chars,  
+            - spaces are ignored
+            - directions are followed until loop is broken
+            **/
 
             if (direction == 1){
                 if (move == 'F'){
                     if (row.charAt(current_col+1) == ' '){
                         current_col++;
-                        logger.info("**** moving forward");
                     }
                 }
 
                 else if (move == 'R'){
                     direction = 3;
-                    logger.info("**** turning down");
                 }
 
                 else if (move == 'L'){
                     direction = 2;
-                    logger.info("**** turning up");
                 }
             }
 
@@ -212,18 +214,15 @@ public class Main {
                 if (move == 'F'){
                     if (row_above.charAt(current_col) == ' '){
                         row_num--;
-                        logger.info("**** moving up");
                     }
                 }
 
                 else if (move == 'R'){
                     direction = 1;
-                    logger.info("**** turning right");
                 }
 
                 else if (move == 'L'){
                     direction = 4;
-                    logger.info("**** turning left");
                 }
             }
 
@@ -231,18 +230,15 @@ public class Main {
                 if (move == 'F'){
                     if (row_below.charAt(current_col) == ' '){
                         row_num++;
-                        logger.info("**** moving down");
                     }
                 }
 
                 else if (move == 'R'){
                     direction = 4;
-                    logger.info("**** turning left");
                 }
 
                 else if (move == 'L'){
                     direction = 1;
-                    logger.info("**** turning right");
                 }
             }
 
@@ -250,25 +246,23 @@ public class Main {
                 if (move == 'F'){
                     if (row.charAt(current_col-1) == ' '){
                         current_col--;
-                        logger.info("**** moving backwards");
                     }
                 }
 
                 else if (move == 'R'){
                     direction = 2;
-                    logger.info("**** turning up");
                 }
 
                 else if (move == 'L'){
                     direction = 3;
-                    logger.info("**** turning down");
                 }
             }
         }    
 
-        return false;
+        return false; //if loop ends without finding the exit or hitting an edge case, path is invalid
     }
 
+    //the findEntrance method looks for the entrance to the maze by iterating through the maze object, returning its index
     private int findEntrance(){
         int lines = maze.size();
         int len = 0;
@@ -279,12 +273,7 @@ public class Main {
             row = maze.get(i);
             len = row.length();
 
-            if (row.charAt(0) == '#'){
-                logger.info("**** no entrance, pass");
-            }
-
-            else{
-                logger.info("**** entrance found!");
+            if (row.charAt(0) == ' '){
                 entry_line = i;
                 i=lines;
             }
@@ -293,35 +282,40 @@ public class Main {
         return entry_line;
     }
 
+    //the factorizePath method takes in the canonical path generated by the pathFinder method and returns the factorized form of it
     private String factorizePath(String canon_path){
         int len = canon_path.length();
         String factor_path = "";
         int num_duplicates = 1;
 
         for (int i=1; i<len; i++){
+            //if statement checks if the current index is the same as the previous
             if (canon_path.charAt(i) == canon_path.charAt(i-1)){
-                num_duplicates++;
+                num_duplicates++; //if true, increases the num_duplicates variable
             }
 
-            else {
-                if (num_duplicates != 1){
+            else { //if the previous and current index are not the same
+                if (num_duplicates != 1){ //if there are duplicates, add the duplicate number to the string and reset it back to one
                     factor_path = factor_path + num_duplicates;
                     num_duplicates = 1;
                 }
 
-                factor_path = factor_path + canon_path.charAt(i-1);
+                factor_path = factor_path + canon_path.charAt(i-1); //add the previous character to the string
             }
         }
 
+        //checks if the string ends in duplicates, and if so, adds them to the string
         if (num_duplicates != 1){
             factor_path = factor_path + num_duplicates;
             factor_path = factor_path + canon_path.charAt(len-1);
         }
 
+        //return the new path
         return factor_path;
     }
 
-    public static void main(String[] args) { //process args and provide UI statements
+    //main method processes args, calls methods when appropriate and provides UI statements
+    public static void main(String[] args) { 
         Options options = new Options();
         options.addOption("i", true,"Traverse the maze");
         options.addOption("p", true,"Verify a path through a maze is valid");
