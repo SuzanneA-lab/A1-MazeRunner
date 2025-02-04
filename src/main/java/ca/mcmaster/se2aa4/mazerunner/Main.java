@@ -63,7 +63,7 @@ public class Main {
      *  
      * **/
 
-    private String pathFinderr(int row_num){
+    private String pathFinder(int row_num){
         String path = "F";
         String row = maze.get(row_num);
         String row_above;
@@ -159,10 +159,10 @@ public class Main {
             }
         }
 
-        return (path+'F');
+        return path;
     }
 
-    private boolean pathVerifyy(String path, int row_num){
+    private boolean pathVerify(String path, int row_num){
         String row = maze.get(row_num);
         String row_above;
         String row_below;
@@ -177,11 +177,11 @@ public class Main {
             row_below = maze.get(row_num+1);
             row_above = maze.get(row_num-1);
 
-            if (move != 'F' && move != 'R' && move != 'L'){
+            if (move != 'F' && move != 'R' && move != 'L' && move != ' '){
                 return false;
             }
 
-            if (current_col == len-1){
+            if (current_col == len-2){
                 return true;
             }
 
@@ -269,39 +269,6 @@ public class Main {
         return false;
     }
 
-    private boolean pathVerify(String path, int entry_line){ //processes the maze with given path and returns a boolean representing whether or not path is valid
-        String row = maze.get(entry_line);
-        boolean valid_path = false;
-        int lines = maze.size();
-        int len = row.length();
-        int current_line = entry_line;
-        int current_col = 0;
-
-        char move;
-        int direction = 1;
-        
-        //while (current_col < len && current_line < lines){
-    
-        for (int j=0; j<path.length(); j++){
-            move = path.charAt(j);
-            if (move == 'F'){
-                if (row.charAt(current_col) == ' '){
-                    current_col++;
-                }
-            }
-            else if (move == 'R'){
-
-            }
-        }      
-        //}
-        
-        if (current_col == len){
-            valid_path = true;
-        }
-
-        return valid_path;
-    }
-
     private int findEntrance(){
         int lines = maze.size();
         int len = 0;
@@ -326,6 +293,34 @@ public class Main {
         return entry_line;
     }
 
+    private String factorizePath(String canon_path){
+        int len = canon_path.length();
+        String factor_path = "";
+        int num_duplicates = 1;
+
+        for (int i=1; i<len; i++){
+            if (canon_path.charAt(i) == canon_path.charAt(i-1)){
+                num_duplicates++;
+            }
+
+            else {
+                if (num_duplicates != 1){
+                    factor_path = factor_path + num_duplicates;
+                    num_duplicates = 1;
+                }
+
+                factor_path = factor_path + canon_path.charAt(i-1);
+            }
+        }
+
+        if (num_duplicates != 1){
+            factor_path = factor_path + num_duplicates;
+            factor_path = factor_path + canon_path.charAt(len-1);
+        }
+
+        return factor_path;
+    }
+
     public static void main(String[] args) { //process args and provide UI statements
         Options options = new Options();
         options.addOption("i", true,"Traverse the maze");
@@ -344,14 +339,15 @@ public class Main {
                 int entry_line = m.findEntrance(); 
 
                 if (cmd.hasOption("p")){
-                    boolean valid = m.pathVerifyy(args[3], entry_line);
+                    boolean valid = m.pathVerify(args[3], entry_line);
                     System.out.println(valid);
                 }
                     
                 else {
                     logger.info("**** Computing path"); //info
-                    String path = m.pathFinderr(entry_line);
-                    System.out.println(path);
+                    String path = m.pathFinder(entry_line);
+                    String factorized_path = m.factorizePath(path);
+                    System.out.println(factorized_path);
                 }
             }
 
