@@ -54,13 +54,13 @@ public class Main {
     }
 
     private String pathFinder(int row_num){
-        String path;
+        String path = "";
         String row = maze.get(row_num);
         String row_above = maze.get(row_num+1);
         String row_below = maze.get(row_num-1);
         int len = row.length();
         int col_num = 0;
-        int[] newcoords = [row_num,0]
+        int[] newcoords = {row_num,0};
 
         Direction N = new North(row_num);
         Direction S = new South(row_num);
@@ -68,29 +68,41 @@ public class Main {
         Direction W = new West(row_num);
         Direction current = E;
 
-        while (col_num<len-1){
-            current.check_case(row, row_above, row_below, col_num);
+        while (col_num<=(len-2) && row_num<=(len-2)){
+            System.out.printf("%d %d \n",row_num, col_num);
+
+            row = maze.get(row_num);
+            row_above = maze.get(row_num-1);
+            row_below = maze.get(row_num+1);
+            System.out.println(row_above);
+            System.out.println(row_below);
+
+            current.check_case(row, row_above, row_below, col_num, row_num);
             path = path + current.get_path();
             current.clear_path();
-            
+
             newcoords = current.getnewcoords();
             row_num = newcoords[0];
             col_num = newcoords[1];
-
-            if (current.get_direction() == 'N'){
+            
+            if (current.get_direction().equals("N")){
                 current = N;
+                System.out.println("face north");
             }
 
-            else if (current.get_direction() == 'S'){
+            else if (current.get_direction().equals("S")){
                 current = S;
+                System.out.println("face south");
             }
 
-            else if (current.get_direction() == 'E'){
+            else if (current.get_direction().equals("E")){
                 current = E;
+                System.out.println("face east");
             }
 
-            else if (current.get_direction() == 'W'){
+            else if (current.get_direction().equals("W")){
                 current = W;
+                System.out.println("face west");
             }
         }
 
@@ -374,28 +386,35 @@ public class Main {
         try {
             CommandLine cmd = parser.parse(options, args);
 
-            if (cmd.hasOption("i")){
+            //if (cmd.hasOption("i")){
                 logger.info("**** Reading the maze from file", args[1]);
                 m.fileProcessor(args[1]);
-                int entry_line = m.findEntrance(); 
-
-                if (cmd.hasOption("p")){
-                    boolean valid = m.pathVerify(args[3], entry_line);
-                    System.out.println(valid);
-                }
-                    
-                else {
-                    logger.info("**** Computing path"); //info
-                    String path = m.pathFinder(entry_line);
-                    String factorized_path = m.factorizePath(path);
-                    System.out.println(factorized_path);
-                }
-            }
 
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
             System.out.println("PATH NOT COMPUTED"); //info
         }
+
+                int entry_line = m.findEntrance(); 
+
+                //if (cmd.hasOption("p")){
+                //    boolean valid = m.pathVerify(args[3], entry_line);
+                //    System.out.println(valid);
+                //}
+                    
+                //else {
+                    logger.info("**** Computing path"); //info
+                    String path = m.pathFinder(entry_line);
+                    String factorized_path = m.factorizePath(path);
+                    System.out.println(factorized_path);
+                //}
+            //}
+
+/*
+        } catch(Exception e) {
+            logger.error("/!\\ An error has occured /!\\");
+            System.out.println("PATH NOT COMPUTED"); //info
+        }*/
 
         logger.info("** End of MazeRunner"); //info
     }

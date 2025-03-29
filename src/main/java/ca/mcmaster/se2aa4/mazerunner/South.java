@@ -12,17 +12,18 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLineParser;
 
 public class South extends Direction {
-    String newdirection = "S";
     
     public South(int num){
         super(num);
-    }
+        newdirection = "S";
+        }
     
-    public void check_case(String row, String row_above, String row_below, int col_num){
+    public void check_case(String row, String row_above, String row_below, int col_num, int row_num){
         this.row = row;
         this.row_above = row_above;
         this.row_below = row_below;
         this.col_num = col_num;
+        this.row_num = row_num;
         
         //blockade in front
         if (row_below.charAt(col_num) == '#'){
@@ -53,27 +54,31 @@ public class South extends Direction {
     }
 
     protected void dead_end(){
-        newcoords = {row_num,col_num};
+        newcoords[0] = row_num;
+        newcoords[1] = col_num;
         newdirection = "N";
         path = "LL";
 
     }
 
     protected void two_paths(){
-        newcoords = {row_num,col_num-1};
+        newcoords[0] = row_num;
+        newcoords[1] = col_num-1;
         newdirection = "W";
         path = "RF";
     }
 
     protected void one_path(){
         if (row.charAt(col_num+1) == ' '){
-            newcoords = {row_num,col_num+1};
+            newcoords[0] = row_num;
+            newcoords[1] = col_num+1;
             newdirection = "E";
             path = "LF";
         }
 
         else{
-            newcoords = {row_num,col_num-1};
+            newcoords[0] = row_num;
+            newcoords[1] = col_num-1;
             newdirection = "W";
             path = "RF";
         }
@@ -81,13 +86,15 @@ public class South extends Direction {
     }
 
     protected void move_forward(){
-        newcoords = {row_num-1,col_num};
+        newcoords[0] = row_num-1;
+        newcoords[1] = col_num;
         path = "F";
     }
 
     protected void follow_wall(){
+        newcoords[0] = row_num;
+        newcoords[1] = col_num-1;
         newdirection = "W";
-        newcoords = {row_num,col_num-1};
         path = "RF";
     }
 }

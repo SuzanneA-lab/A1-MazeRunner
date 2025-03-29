@@ -12,17 +12,18 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLineParser;
 
 public class North extends Direction {
-    String newdirection = "N";
     
     public North(int num){
         super(num);
+        newdirection = "N";
     }
     
-    public void check_case(String row, String row_above, String row_below, int col_num){
+    public void check_case(String row, String row_above, String row_below, int col_num, int row_num){
         this.row = row;
         this.row_above = row_above;
         this.row_below = row_below;
         this.col_num = col_num;
+        this.row_num = row_num;
         
         //blockade in front
         if (row_above.charAt(col_num) == '#'){
