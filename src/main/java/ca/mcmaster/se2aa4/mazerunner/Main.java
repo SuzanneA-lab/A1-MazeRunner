@@ -53,8 +53,54 @@ public class Main {
         }
     }
 
+    private String pathFinder(int row_num){
+        String path;
+        String row = maze.get(row_num);
+        String row_above = maze.get(row_num+1);
+        String row_below = maze.get(row_num-1);
+        int len = row.length();
+        int col_num = 0;
+        int[] newcoords = [row_num,0]
+
+        Direction N = new North(row_num);
+        Direction S = new South(row_num);
+        Direction E = new East(row_num);
+        Direction W = new West(row_num);
+        Direction current = E;
+
+        while (col_num<len-1){
+            current.check_case(row, row_above, row_below, col_num);
+            path = path + current.get_path();
+            current.clear_path();
+            
+            newcoords = current.getnewcoords();
+            row_num = newcoords[0];
+            col_num = newcoords[1];
+
+            if (current.get_direction() == 'N'){
+                current = N;
+            }
+
+            else if (current.get_direction() == 'S'){
+                current = S;
+            }
+
+            else if (current.get_direction() == 'E'){
+                current = E;
+            }
+
+            else if (current.get_direction() == 'W'){
+                current = W;
+            }
+        }
+
+        return path;
+
+    }
+
     //the pathfinder method uses the makeMove method to find a path through the maze
     //accepts the entry row number as an argument
+    /*
     private String pathFinder(int row_num){
         String path = "F"; //the path always starts with F, to account for indexing issues
         
@@ -154,6 +200,7 @@ public class Main {
 
         return path;
     }
+    */
 
     //pathVerify method takes in the entry line and a path given by the user and returns a boolean representing if the path is legit or not
     private boolean pathVerify(String path, int row_num){
