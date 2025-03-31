@@ -62,7 +62,7 @@ public class West extends Direction {
     }
 
     protected void two_paths(){
-        newcoords[0] = row_num+1;
+        newcoords[0] = row_num-1;
         newcoords[1] = col_num;
         newdirection = "N";
         path = "RF";
@@ -70,14 +70,14 @@ public class West extends Direction {
 
     protected void one_path(){
         if (row_above.charAt(col_num) == ' '){
-            newcoords[0] = row_num+1;
+            newcoords[0] = row_num-1;
             newcoords[1] = col_num;
             newdirection = "N";
             path = "RF";
         }
 
         else{
-            newcoords[0] = row_num-1;
+            newcoords[0] = row_num+1;
             newcoords[1] = col_num;
             newdirection = "S";
             path = "LF";
@@ -89,10 +89,11 @@ public class West extends Direction {
         newcoords[0] = row_num;
         newcoords[1] = col_num-1;
         path = "F";
+        System.out.println("backwards");
     }
 
     protected void follow_wall(){
-        newcoords[0] = row_num+1;
+        newcoords[0] = row_num-1;
         newcoords[1] = col_num;
         newdirection = "N";
         path = "RF";

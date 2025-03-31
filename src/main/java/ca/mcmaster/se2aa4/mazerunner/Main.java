@@ -61,6 +61,7 @@ public class Main {
         int len = row.length();
         int col_num = 0;
         int[] newcoords = {row_num,0};
+        int j=0;
 
         Direction N = new North(row_num);
         Direction S = new South(row_num);
@@ -68,14 +69,13 @@ public class Main {
         Direction W = new West(row_num);
         Direction current = E;
 
-        while (col_num<=(len-2) && row_num<=(len-2)){
-            System.out.printf("%d %d \n",row_num, col_num);
-
+        while (j<20 && col_num<=(len-2) && row_num<=(len-2)){
+            j++;
             row = maze.get(row_num);
             row_above = maze.get(row_num-1);
             row_below = maze.get(row_num+1);
-            System.out.println(row_above);
-            System.out.println(row_below);
+            //System.out.println(row_above);
+            //System.out.println(row_below);
 
             current.check_case(row, row_above, row_below, col_num, row_num);
             path = path + current.get_path();
@@ -84,6 +84,8 @@ public class Main {
             newcoords = current.getnewcoords();
             row_num = newcoords[0];
             col_num = newcoords[1];
+            System.out.printf("%d %d \n",row_num, col_num);
+            System.out.println(path);
             
             if (current.get_direction().equals("N")){
                 current = N;

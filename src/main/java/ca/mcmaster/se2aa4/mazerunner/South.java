@@ -53,6 +53,7 @@ public class South extends Direction {
         }
     }
 
+
     protected void dead_end(){
         newcoords[0] = row_num;
         newcoords[1] = col_num;
@@ -86,7 +87,7 @@ public class South extends Direction {
     }
 
     protected void move_forward(){
-        newcoords[0] = row_num-1;
+        newcoords[0] = row_num+1;
         newcoords[1] = col_num;
         path = "F";
     }

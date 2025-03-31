@@ -62,7 +62,7 @@ public class East extends Direction {
     }
 
     protected void two_paths(){
-        newcoords[0] = row_num-1;
+        newcoords[0] = row_num+1;
         newcoords[1] = col_num;
         newdirection = "S";
         path = "RF";
@@ -70,14 +70,14 @@ public class East extends Direction {
 
     protected void one_path(){
         if (row_above.charAt(col_num) == ' '){
-            newcoords[0] = row_num+1;
+            newcoords[0] = row_num-1;
             newcoords[1] = col_num;
             newdirection = "N";
             path = "LF";
         }
 
         else{
-            newcoords[0] = row_num-1;
+            newcoords[0] = row_num+1;
             newcoords[1] = col_num;
             newdirection = "S";
             path = "RF";
@@ -93,7 +93,7 @@ public class East extends Direction {
     }
 
     protected void follow_wall(){
-        newcoords[0] = row_num-1;
+        newcoords[0] = row_num+1;
         newcoords[1] = col_num;
         newdirection = "S";
         path = "RF";

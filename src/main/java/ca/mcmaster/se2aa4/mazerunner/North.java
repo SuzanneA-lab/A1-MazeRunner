@@ -66,6 +66,7 @@ public class North extends Direction {
         newcoords[1] = col_num+1;
         newdirection = "E";
         path = "RF";
+        System.out.println("turn and go forward");
     }
 
     protected void one_path(){
@@ -74,6 +75,7 @@ public class North extends Direction {
             newcoords[1] = col_num+1;
             newdirection = "E";
             path = "RF";
+            System.out.println("turn and go forward");
         }
 
         else{
@@ -86,9 +88,10 @@ public class North extends Direction {
     }
 
     protected void move_forward(){
-        newcoords[0] = row_num+1;
+        newcoords[0] = row_num-1;
         newcoords[1] = col_num;
         path = "F";
+        System.out.println("go up");
     }
 
     protected void follow_wall(){
