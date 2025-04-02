@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileReader;
+import java.lang.String;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.cli.Options;
@@ -24,7 +25,38 @@ public class North extends Direction {
         this.row_below = row_below;
         this.col_num = col_num;
         this.row_num = row_num;
-        
+        char right_tile = row.charAt(col_num+1);
+        char front_tile = row_above.charAt(col_num); 
+        System.out.printf("row: %s \n",row);
+        System.out.println("row above: " + row_above + "\n");
+        System.out.println("right of n:" + right_tile + "front of n:" + front_tile + "\n");
+
+        if (right_tile == ' '){
+                newcoords[0] = row_num;
+                newcoords[1] = col_num+1;
+                newdirection = "E";
+                path = "RF";
+            }
+    
+        else {
+            if (front_tile == '#'){
+                newdirection = "W";
+                newcoords[0] = row_num;
+                newcoords[1] = col_num;
+                path = "L";
+                System.out.println("we went west :(");
+            }
+
+            else {
+                newdirection = "N";
+                newcoords[0] = row_num-1;
+                newcoords[1] = col_num;
+                path = "F";
+            }
+        }
+    }
+         /*
+
         //blockade in front
         if (row_above.charAt(col_num) == '#'){
 
@@ -52,6 +84,8 @@ public class North extends Direction {
             }
         }
     }
+
+    */
 
     protected void dead_end(){
         newcoords[0] = row_num;

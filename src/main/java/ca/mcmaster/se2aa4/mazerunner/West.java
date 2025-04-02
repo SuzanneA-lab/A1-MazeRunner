@@ -24,7 +24,35 @@ public class West extends Direction {
         this.row_below = row_below;
         this.col_num = col_num;
         this.row_num = row_num;
+        System.out.printf("%d %d \n",row_num, col_num);
         
+        if (row_above.charAt(col_num) == ' '){
+             newcoords[0] = row_num-1;
+             newcoords[1] = col_num;
+             newdirection = "N";
+             path = "RF";
+         }
+ 
+         else {
+ 
+             if (row.charAt(col_num-1) == '#'){
+                 newdirection = "S";
+                 newcoords[0] = row_num;
+                 newcoords[1] = col_num;
+                 path = "L";
+             }
+ 
+             else {
+                 newdirection = "W";
+                 newcoords[0] = row_num;
+                 newcoords[1] = col_num-1;
+                 path = "F";
+             }
+         }
+     }
+ 
+     /*
+
         //blockade in front
         if (row.charAt(col_num-1) == '#'){
 
@@ -52,6 +80,7 @@ public class West extends Direction {
             }
         }
     }
+    */
 
     protected void dead_end(){
         newcoords[0] = row_num;
