@@ -25,36 +25,76 @@ public class North extends Direction {
         this.row_below = row_below;
         this.col_num = col_num;
         this.row_num = row_num;
+
         char right_tile = row.charAt(col_num+1);
         char front_tile = row_above.charAt(col_num); 
-        System.out.printf("row: %s \n",row);
-        System.out.println("row above: " + row_above + "\n");
-        System.out.println("right of n:" + right_tile + "front of n:" + front_tile + "\n");
 
+        this.make_decision(right_tile, front_tile);
+    }
+
+/*
+    public void check_case(String row, String row_above, String row_below, int col_num, int row_num){
+        this.row = row;
+        this.row_above = row_above;
+        this.row_below = row_below;
+        this.col_num = col_num;
+        this.row_num = row_num;
+
+        char right_tile = row.charAt(col_num+1);
+        char front_tile = row_above.charAt(col_num); 
+
+        
         if (right_tile == ' '){
-                newcoords[0] = row_num;
-                newcoords[1] = col_num+1;
-                newdirection = "E";
-                path = "RF";
+                this.turnRight();
             }
     
         else {
             if (front_tile == '#'){
-                newdirection = "W";
-                newcoords[0] = row_num;
-                newcoords[1] = col_num;
-                path = "L";
-                System.out.println("we went west :(");
+                this.turnLeft();
             }
 
             else {
-                newdirection = "N";
-                newcoords[0] = row_num-1;
-                newcoords[1] = col_num;
-                path = "F";
+                this.moveForward();
             }
         }
+        
     }
+
+
+/*
+    protected char makeMove(char move){
+        if (move == 'F'){
+            newcoords[0] = row_num-1;
+            newcoords[1] = col_num;
+        }
+
+        else if (move == 'R'){
+
+        }
+    }
+    */
+
+    protected void moveForward(){
+        newdirection = "N";
+        newcoords[0] = row_num-1;
+        newcoords[1] = col_num;
+        path = "F";
+    }
+
+    protected void turnLeft(){
+        newdirection = "W";
+        newcoords[0] = row_num;
+        newcoords[1] = col_num;
+        path = "L";
+    }
+
+    protected void turnRight(){
+        newcoords[0] = row_num;
+        newcoords[1] = col_num+1;
+        newdirection = "E";
+        path = "RF";
+    }
+
          /*
 
         //blockade in front

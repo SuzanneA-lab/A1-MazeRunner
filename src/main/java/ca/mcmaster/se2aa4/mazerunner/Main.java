@@ -15,6 +15,11 @@ public class Main {
     //this array list is used to store the maze read in from the file
     private ArrayList<String> maze = new ArrayList<String>(); 
 
+    Direction N;
+    Direction S;
+    Direction E;
+    Direction W;
+
     //logger object is created at this stage
     private static final Logger logger = LogManager.getLogger();
 
@@ -63,10 +68,10 @@ public class Main {
         int[] newcoords = {row_num,0};
         int j=0;
 
-        Direction N = new North(row_num);
-        Direction S = new South(row_num);
-        Direction E = new East(row_num);
-        Direction W = new West(row_num);
+        N = new North(row_num);
+        S = new South(row_num);
+        E = new East(row_num);
+        W = new West(row_num);
         Direction current = E;
 
         System.out.printf("exit line: %d\n",exit_line);
@@ -224,7 +229,28 @@ public class Main {
         return path;
     }
     */
+/*
 
+    private String pathVerify(String path, int entry_line, int exit_line){
+        String row =  maze.get(entry_line);
+        String row_above;
+        String row_below;
+        char move;
+        int len = row.length();
+        int row_num = entry_line;
+        int col_num = 0;
+
+        Direction current = E;
+
+        while (row_num != exit_line || col_num != len-1){
+
+        }
+
+        return "Valid path entered";
+    
+    }
+
+    */
     //pathVerify method takes in the entry line and a path given by the user and returns a boolean representing if the path is legit or not
     private boolean pathVerify(String path, int row_num){
         //see pathFinder method for in-depth descriptions of variables
@@ -332,6 +358,7 @@ public class Main {
         return false; //if loop ends without finding the exit or hitting an edge case, path is invalid
     }
 
+
     //the findEntrance method looks for the entrance to the maze by iterating through the maze object, returning its index
     private int findEntrance(){
         int lines = maze.size();
@@ -420,36 +447,31 @@ public class Main {
         try {
             CommandLine cmd = parser.parse(options, args);
 
-            //if (cmd.hasOption("i")){
+            if (cmd.hasOption("i")){
                 logger.info("**** Reading the maze from file", args[1]);
                 m.fileProcessor(args[1]);
+
+                int entry_line = m.findEntrance(); 
+                int exit_line = m.findExit();
+
+                if (cmd.hasOption("p")){
+                    boolean valid = m.pathVerify(args[3], entry_line);
+                    System.out.println(valid);
+                }
+                    
+                else {
+                    logger.info("**** Computing path"); //info
+                    String path = m.pathFinder(entry_line, exit_line);
+                    String factorized_path = m.factorizePath(path);
+                    System.out.println(factorized_path);
+                }
+            }
+
 
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
             System.out.println("PATH NOT COMPUTED"); //info
         }
-
-                int entry_line = m.findEntrance(); 
-                int exit_line = m.findExit();
-
-                //if (cmd.hasOption("p")){
-                //    boolean valid = m.pathVerify(args[3], entry_line);
-                //    System.out.println(valid);
-                //}
-                    
-                //else {
-                    logger.info("**** Computing path"); //info
-                    String path = m.pathFinder(entry_line, exit_line);
-                    String factorized_path = m.factorizePath(path);
-                    System.out.println(factorized_path);
-                //}
-            //}
-
-/*
-        } catch(Exception e) {
-            logger.error("/!\\ An error has occured /!\\");
-            System.out.println("PATH NOT COMPUTED"); //info
-        }*/
 
         logger.info("** End of MazeRunner"); //info
     }

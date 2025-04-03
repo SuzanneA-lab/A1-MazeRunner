@@ -25,14 +25,36 @@ public abstract class Direction {
         row_num = num;
     }
 
-    abstract public void check_case(String row, String row_above, String row_below, int col_num, int row_num);
+    
+    public void make_decision(char right_tile, char front_tile){
+        if (right_tile == ' '){
+                this.turnRight();
+            }
+    
+        else {
+            if (front_tile == '#'){
+                this.turnLeft();
+            }
+
+            else {
+                this.moveForward();
+            }
+        }
+    } 
     
     //these methods return the new coordinate positions for each action, and are used within check_case
+    abstract protected void check_case(String row, String row_above, String row_below, int col_num, int row_num);
+
     abstract protected void dead_end();
     abstract protected void two_paths();
     abstract protected void one_path();
     abstract protected void move_forward();
     abstract protected void follow_wall();
+
+    abstract protected void moveForward();
+    abstract protected void turnLeft();
+    abstract protected void turnRight();
+    //abstract protected char makeMove(char move);
 
     //returns the update to the path
     public String get_path(){

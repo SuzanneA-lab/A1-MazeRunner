@@ -24,33 +24,34 @@ public class West extends Direction {
         this.row_below = row_below;
         this.col_num = col_num;
         this.row_num = row_num;
-        System.out.printf("%d %d \n",row_num, col_num);
-        
-        if (row_above.charAt(col_num) == ' '){
-             newcoords[0] = row_num-1;
-             newcoords[1] = col_num;
-             newdirection = "N";
-             path = "RF";
-         }
+
+        char right_tile = row_above.charAt(col_num);
+        char front_tile = row.charAt(col_num-1); 
+
+        this.make_decision(right_tile, front_tile);
+    }
  
-         else {
- 
-             if (row.charAt(col_num-1) == '#'){
-                 newdirection = "S";
-                 newcoords[0] = row_num;
-                 newcoords[1] = col_num;
-                 path = "L";
-             }
- 
-             else {
-                 newdirection = "W";
-                 newcoords[0] = row_num;
-                 newcoords[1] = col_num-1;
-                 path = "F";
-             }
-         }
-     }
- 
+    protected void moveForward(){
+        newdirection = "W";
+        newcoords[0] = row_num;
+        newcoords[1] = col_num-1;
+        path = "F";
+    }
+
+    protected void turnLeft(){
+        newdirection = "S";
+        newcoords[0] = row_num;
+        newcoords[1] = col_num;
+        path = "L";
+    }
+
+    protected void turnRight(){
+        newcoords[0] = row_num-1;
+        newcoords[1] = col_num;
+        newdirection = "N";
+        path = "RF";
+    }
+
      /*
 
         //blockade in front

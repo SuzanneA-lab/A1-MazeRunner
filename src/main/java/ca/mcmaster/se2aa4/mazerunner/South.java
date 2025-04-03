@@ -24,33 +24,34 @@ public class South extends Direction {
         this.row_below = row_below;
         this.col_num = col_num;
         this.row_num = row_num;
-        System.out.printf("%d %d \n",row_num, col_num);
+
+        char right_tile = row.charAt(col_num-1);
+        char front_tile = row_below.charAt(col_num); 
         
-        if (row.charAt(col_num-1) == ' '){
-             newcoords[0] = row_num;
-             newcoords[1] = col_num-1;
-             newdirection = "W";
-             path = "RF";
-         }
- 
-         else {
- 
-             if (row_below.charAt(col_num) == '#'){
-                 newdirection = "E";
-                 newcoords[0] = row_num;
-                 newcoords[1] = col_num;
-                 path = "L";
-             }
- 
-             else {
-                 newdirection = "S";
-                 newcoords[0] = row_num+1;
-                 newcoords[1] = col_num;
-                 path = "F";
-             }
-         }
+        this.make_decision(right_tile, front_tile);
      }
  
+    protected void moveForward(){
+        newdirection = "S";
+        newcoords[0] = row_num+1;
+        newcoords[1] = col_num;
+        path = "F";
+    }
+
+    protected void turnLeft(){
+        newdirection = "E";
+        newcoords[0] = row_num;
+        newcoords[1] = col_num;
+        path = "L";
+    }
+
+    protected void turnRight(){
+        newcoords[0] = row_num;
+        newcoords[1] = col_num-1;
+        newdirection = "W";
+        path = "RF";
+    }
+
      /*
         //blockade in front
         if (row_below.charAt(col_num) == '#'){
