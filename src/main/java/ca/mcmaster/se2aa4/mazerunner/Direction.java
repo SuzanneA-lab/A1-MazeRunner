@@ -20,11 +20,11 @@ public abstract class Direction {
     String path;
     String newdirection = "";
     int[] newcoords = {0,0};
-
+/*
     public Direction(int num){
         row_num = num;
     }
-
+*/
     
     public void make_decision(char right_tile, char front_tile){
         if (right_tile == ' '){
@@ -41,7 +41,15 @@ public abstract class Direction {
             }
         }
     } 
-    
+
+    public void path_check(String row, String row_above, String row_below, int col_num, int row_num){
+        this.row = row;
+        this.row_above = row_above;
+        this.row_below = row_below;
+        this.col_num = col_num;
+        this.row_num = row_num;
+    }
+
     //these methods return the new coordinate positions for each action, and are used within check_case
     abstract protected void check_case(String row, String row_above, String row_below, int col_num, int row_num);
 
@@ -54,6 +62,7 @@ public abstract class Direction {
     abstract protected void moveForward();
     abstract protected void turnLeft();
     abstract protected void turnRight();
+    abstract protected void OnlyturnRight();
     //abstract protected char makeMove(char move);
 
     //returns the update to the path

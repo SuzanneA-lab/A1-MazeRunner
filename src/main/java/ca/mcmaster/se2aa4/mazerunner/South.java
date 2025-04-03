@@ -13,8 +13,8 @@ import org.apache.commons.cli.CommandLineParser;
 
 public class South extends Direction {
     
-    public South(int num){
-        super(num);
+    public South(/*int num*/){
+        //super(num);
         newdirection = "S";
         }
     
@@ -43,6 +43,13 @@ public class South extends Direction {
         newcoords[0] = row_num;
         newcoords[1] = col_num;
         path = "L";
+    }
+
+    protected void OnlyturnRight(){
+        newcoords[0] = row_num;
+        newcoords[1] = col_num;
+        newdirection = "W";
+        path = "R";
     }
 
     protected void turnRight(){

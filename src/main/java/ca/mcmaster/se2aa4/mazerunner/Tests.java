@@ -12,9 +12,9 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLineParser;
 
 public abstract class Tests {
-    new Main main = Main();
+    Main main = new Main();
 
-    private void horizontalTest(){
+    //private void horizontalTest(){
 
-    }
+    //}
 }

@@ -15,10 +15,11 @@ public class Main {
     //this array list is used to store the maze read in from the file
     private ArrayList<String> maze = new ArrayList<String>(); 
 
-    Direction N;
-    Direction S;
-    Direction E;
-    Direction W;
+    Direction N = new North();
+    Direction S = new South();
+    Direction E = new East();
+    Direction W = new West();
+    Direction current;
 
     //logger object is created at this stage
     private static final Logger logger = LogManager.getLogger();
@@ -61,18 +62,14 @@ public class Main {
     private String pathFinder(int row_num, int exit_line){
         String path = "";
         String row = maze.get(row_num);
-        String row_above = maze.get(row_num+1);
-        String row_below = maze.get(row_num-1);
+        String row_above = maze.get(row_num-1);
+        String row_below = maze.get(row_num+1);
         int len = row.length();
         int col_num = 0;
         int[] newcoords = {row_num,0};
         int j=0;
 
-        N = new North(row_num);
-        S = new South(row_num);
-        E = new East(row_num);
-        W = new West(row_num);
-        Direction current = E;
+        current = E;
 
         System.out.printf("exit line: %d\n",exit_line);
 
@@ -98,32 +95,38 @@ public class Main {
             newcoords = current.getnewcoords();
             row_num = newcoords[0];
             col_num = newcoords[1];
+
+            this.updateDirection();
+
             //System.out.printf("%d %d \n",row_num, col_num);
-            System.out.println(path);
-            
-            if (current.get_direction().equals("N")){
-                current = N;
-                System.out.println("face north");
-            }
+            //System.out.println(path);
 
-            else if (current.get_direction().equals("S")){
-                current = S;
-                System.out.println("face south");
-            }
-
-            else if (current.get_direction().equals("E")){
-                current = E;
-                System.out.println("face east");
-            }
-
-            else if (current.get_direction().equals("W")){
-                current = W;
-                System.out.println("face west");
-            }
         }
 
         return path;
 
+    }
+
+    private void updateDirection(){
+        if (current.get_direction().equals("N")){
+            current = N;
+            System.out.println("face north");
+        }
+
+        else if (current.get_direction().equals("S")){
+            current = S;
+            System.out.println("face south");
+        }
+
+        else if (current.get_direction().equals("E")){
+            current = E;
+            System.out.println("face east");
+        }
+
+        else if (current.get_direction().equals("W")){
+            current = W;
+            System.out.println("face west");
+        }
     }
 
     //the pathfinder method uses the makeMove method to find a path through the maze
@@ -229,28 +232,63 @@ public class Main {
         return path;
     }
     */
-/*
 
     private String pathVerify(String path, int entry_line, int exit_line){
-        String row =  maze.get(entry_line);
+        String row = maze.get(entry_line);
         String row_above;
         String row_below;
         char move;
         int len = row.length();
         int row_num = entry_line;
         int col_num = 0;
+        int[] newcoords = {row_num,0};
 
-        Direction current = E;
+        int i = 0;
+        int path_len = path.length();
+
+        current = E;
 
         while (row_num != exit_line || col_num != len-1){
+            if (i == path_len){
+                return "Invalid path entered";
+            }   
+            
+            row = maze.get(row_num);
+            row_above = maze.get(row_num-1);
+            row_below = maze.get(row_num+1); 
+            
+            move = path.charAt(i);
+            current.path_check(row, row_above, row_below, col_num, row_num);
 
+            if (move == 'F'){
+                current.moveForward();
+            }
+            
+            else if (move == 'L'){
+                current.turnLeft();
+            }
+
+            else if (move == 'R'){
+                current.OnlyturnRight();
+            }
+
+            else {
+                return "Invalid path entered";
+            }
+
+            newcoords = current.getnewcoords();
+            row_num = newcoords[0];
+            col_num = newcoords[1];
+            
+            this.updateDirection();
+            i++;
         }
 
         return "Valid path entered";
     
     }
 
-    */
+
     //pathVerify method takes in the entry line and a path given by the user and returns a boolean representing if the path is legit or not
     private boolean pathVerify(String path, int row_num){
         //see pathFinder method for in-depth descriptions of variables
@@ -455,16 +493,16 @@ public class Main {
                 int exit_line = m.findExit();
 
                 if (cmd.hasOption("p")){
-                    boolean valid = m.pathVerify(args[3], entry_line);
+                    String valid = m.pathVerify(args[3], entry_line, exit_line);
                     System.out.println(valid);
                 }
                     
-                else {
+               else {
                     logger.info("**** Computing path"); //info
                     String path = m.pathFinder(entry_line, exit_line);
                     String factorized_path = m.factorizePath(path);
                     System.out.println(factorized_path);
-                }
+                } 
             }
 
 
@@ -472,6 +510,9 @@ public class Main {
             logger.error("/!\\ An error has occured /!\\");
             System.out.println("PATH NOT COMPUTED"); //info
         }
+        
+
+        
 
         logger.info("** End of MazeRunner"); //info
     }
