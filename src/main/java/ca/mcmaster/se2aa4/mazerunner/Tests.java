@@ -22,61 +22,62 @@ public class Tests {
         String row;
         String row_above;
         String row_below;
-        int col_num = 2;
         int row_num = 1;
+        int col_num = 2;
+
+        System.out.println("\nRunning right turn test...");
 
         //NORTH
-        System.out.println("\nRunning right turn test...");
-        System.out.println("Stage 1: north");
-
         row = "##  ##";
         row_above = "######";
         row_below = "######";
 
         N.check_case(row, row_above, row_below, col_num, row_num);
-        this.rightTurnTestRunner(N, "E");
+        this.TurnTestRunner(N, "E", 1, 3, "North", 1);
 
         //EAST
-        System.out.println("Stage 2: east");
-
         row = "## ###";
         row_above = "######";
         row_below = "## ###";
 
         E.check_case(row, row_above, row_below, col_num, row_num);
-        this.rightTurnTestRunner(E, "S");
+        this.TurnTestRunner(E, "S", 2, 2, "East", 2);
 
         //SOUTH
-        System.out.println("Stage 3: south");
-
         row = "#  ###";
         row_above = "######";
         row_below = "######";
 
         S.check_case(row, row_above, row_below, col_num, row_num);
-        this.rightTurnTestRunner(S, "W");
+        this.TurnTestRunner(S, "W", 1, 1, "South", 3);
 
         //WEST        
-        System.out.println("Stage 4: west");
-
         row = "## ###";
         row_above = "## ###";
         row_below = "######";
 
         W.check_case(row, row_above, row_below, col_num, row_num);
-        this.rightTurnTestRunner(W, "N");
+        this.TurnTestRunner(W, "N", 0, 2, "West", 4);
     }
 
-    private void rightTurnTestRunner(Direction current, String right_direction){
+    private void TurnTestRunner(Direction current, String right_direction, int right_row_num, int right_col_num, String direction, int stage){
+        System.out.printf("\nStage %d: %s\n", stage, direction);
+
         int[] Coords = current.getnewcoords();
+        int row_num = Coords[0];
+        int col_num = Coords[1];
         String Direction = current.get_direction();
 
-        if (Direction.equals(right_direction)){
-            System.out.printf("Test PASS! Expected result %s, Actual result %s\n", right_direction, Direction);
+        if (Direction.equals(right_direction) && row_num == right_row_num && col_num == right_col_num){
+            System.out.printf("Test PASS! Expected direction: %s, Actual direction: %s\n", right_direction, Direction);
+            System.out.printf("           Expected row number: %d, Actual row number: %d\n", right_row_num, row_num);
+            System.out.printf("           Expected column number: %d, Actual column number: %d\n", right_col_num, col_num);
         }
 
         else{
             System.out.printf("Test FAIL! Expected result %s, Actual result %s\n", right_direction, Direction);
+            System.out.printf("           Expected row number: %d, Actual row number: %d\n", right_row_num, row_num);
+            System.out.printf("           Expected column number: %d, Actual column number: %d\n", right_col_num, col_num);
         }
     }
 
