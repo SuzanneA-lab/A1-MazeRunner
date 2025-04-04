@@ -474,6 +474,9 @@ public class Main {
 
     //main method processes args, calls methods when appropriate and provides UI statements
     public static void main(String[] args) { 
+        Tests t = new Tests();
+        t.rightTurnTest();
+
         Options options = new Options();
         options.addOption("i", true,"Traverse the maze");
         options.addOption("p", true,"Verify a path through a maze is valid");
