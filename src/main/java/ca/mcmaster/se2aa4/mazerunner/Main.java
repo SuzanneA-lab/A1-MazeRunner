@@ -234,6 +234,8 @@ public class Main {
     */
 
     private String pathVerify(String path, int entry_line, int exit_line){
+        path = this.canonizePath(path);
+
         String row = maze.get(entry_line);
         String row_above;
         String row_below;
@@ -472,11 +474,44 @@ public class Main {
         return factor_path;
     }
 
+    public String canonizePath(String factor_path){
+        int len = factor_path.length();
+        String canon_path = "";
+        char move;
+        String num_duplicates = "";
+
+        for (int i=0; i<len; i++){
+            move = factor_path.charAt(i);
+
+            if (move == 'F' || move == 'L' || move == 'R'){
+                if (num_duplicates.equals("")){
+                    canon_path = canon_path + move;
+                }
+
+                else {
+                    for (int j=0; j < Integer.parseInt(num_duplicates); j++){
+                        canon_path = canon_path + move;
+                    }
+                }
+
+                num_duplicates = "";
+            }
+
+            else {
+                num_duplicates = num_duplicates + move;
+            }
+        }
+    
+        return canon_path;
+    }
+
     //main method processes args, calls methods when appropriate and provides UI statements
     public static void main(String[] args) { 
         Tests t = new Tests();
         t.rightTurnTest();
         t.factorizePathTest();
+        t.LeftTurnTest();
+        t.canonizePathTest();
 
         Options options = new Options();
         options.addOption("i", true,"Traverse the maze");
