@@ -13,10 +13,9 @@ import org.apache.commons.cli.CommandLineParser;
 
 public class South extends Direction {
     
-    public South(/*int num*/){
-        //super(num);
+    public South(){
         newdirection = "S";
-        }
+    }
     
     public void check_case(String row, String row_above, String row_below, int col_num, int row_num){
         this.row = row;
@@ -29,7 +28,7 @@ public class South extends Direction {
         char front_tile = row_below.charAt(col_num); 
         
         this.make_decision(right_tile, front_tile);
-     }
+    }
  
     protected void moveForward(){
         newdirection = "S";
@@ -59,79 +58,4 @@ public class South extends Direction {
         path = "RF";
     }
 
-     /*
-        //blockade in front
-        if (row_below.charAt(col_num) == '#'){
-
-            //if we've hit a dead end 
-            if (row.charAt(col_num+1) == '#' && row.charAt(col_num-1) == '#'){
-                this.dead_end();
-            }
-
-            else if (row.charAt(col_num+1) == ' ' && row.charAt(col_num-1) == ' '){
-                this.two_paths();
-            }
-
-            else if (row.charAt(col_num+1) == ' ' || row.charAt(col_num-1) == ' '){
-                this.one_path();
-            }
-        }
-
-        else {
-            if (row.charAt(col_num-1) == ' '){
-                this.follow_wall();
-            }
-
-            else {
-                this.move_forward(); 
-            }
-        }
-    }
-
-    */
-
-    protected void dead_end(){
-        newcoords[0] = row_num;
-        newcoords[1] = col_num;
-        newdirection = "N";
-        path = "LL";
-
-    }
-
-    protected void two_paths(){
-        newcoords[0] = row_num;
-        newcoords[1] = col_num-1;
-        newdirection = "W";
-        path = "RF";
-    }
-
-    protected void one_path(){
-        if (row.charAt(col_num+1) == ' '){
-            newcoords[0] = row_num;
-            newcoords[1] = col_num+1;
-            newdirection = "E";
-            path = "LF";
-        }
-
-        else{
-            newcoords[0] = row_num;
-            newcoords[1] = col_num-1;
-            newdirection = "W";
-            path = "RF";
-        }
-        
-    }
-
-    protected void move_forward(){
-        newcoords[0] = row_num+1;
-        newcoords[1] = col_num;
-        path = "F";
-    }
-
-    protected void follow_wall(){
-        newcoords[0] = row_num;
-        newcoords[1] = col_num-1;
-        newdirection = "W";
-        path = "RF";
-    }
 }

@@ -13,8 +13,7 @@ import org.apache.commons.cli.CommandLineParser;
 
 public class East extends Direction {
 
-    public East(/*int num*/){
-        //super(num);
+    public East(){
         newdirection = "E";
     }
     
@@ -57,84 +56,5 @@ public class East extends Direction {
         newcoords[1] = col_num;
         newdirection = "S";
         path = "RF";
-    }
-
-
-     /*
-
-        //blockade in front
-        if (row.charAt(col_num+1) == '#'){
-
-            //if we've hit a dead end 
-            if (row_above.charAt(col_num) == '#' && row_below.charAt(col_num) == '#'){
-                this.dead_end();
-            }
-
-            else if (row_above.charAt(col_num) == ' ' && row_below.charAt(col_num) == ' '){
-                this.two_paths();
-            }
-
-            else if (row_above.charAt(col_num) == '#' || row_below.charAt(col_num) == '#'){
-                this.one_path();
-            }
-        }
-
-        else {
-            if (row_below.charAt(col_num) == ' '){
-                this.follow_wall();
-            }
-
-            else {
-                this.move_forward(); 
-            }
-        }
-    }
-    */
-
-    protected void dead_end(){
-        newcoords[0] = row_num;
-        newcoords[1] = col_num;
-        newdirection = "W";
-        path = "LL";
-
-    }
-
-    protected void two_paths(){
-        newcoords[0] = row_num+1;
-        newcoords[1] = col_num;
-        newdirection = "S";
-        path = "RF";
-    }
-
-    protected void one_path(){
-        if (row_above.charAt(col_num) == ' '){
-            newcoords[0] = row_num-1;
-            newcoords[1] = col_num;
-            newdirection = "N";
-            path = "LF";
-        }
-
-        else{
-            newcoords[0] = row_num+1;
-            newcoords[1] = col_num;
-            newdirection = "S";
-            path = "RF";
-        }
-        
-    }
-
-    protected void move_forward(){
-        newcoords[0] = row_num;
-        newcoords[1] = col_num+1;
-        path = "F";
-        System.out.println("forward");
-    }
-
-    protected void follow_wall(){
-        newcoords[0] = row_num+1;
-        newcoords[1] = col_num;
-        newdirection = "S";
-        path = "RF";
-        System.out.println("follow wall");
     }
 }
