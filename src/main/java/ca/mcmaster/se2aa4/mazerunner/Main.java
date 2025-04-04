@@ -41,6 +41,10 @@ public class Main {
         }
     }
 
+    private ArrayList<String> getMaze(){
+        return maze;
+    }
+
     //the makeMove method uses the right-hand rule to determine the next move the user should make, depending on the right and front tiles
     //accepts the right tile and next tile as char arguments to evaluate moves
     private String makeMove(char right_tile, char next_tile){
@@ -59,7 +63,7 @@ public class Main {
         }
     }
 
-    private String pathFinder(int row_num, int exit_line){
+    public String pathFinder(int row_num, int exit_line, ArrayList<String> maze){
         String path = "";
         String row = maze.get(row_num);
         String row_above = maze.get(row_num-1);
@@ -103,7 +107,8 @@ public class Main {
 
         }
 
-        return path;
+        return this.factorizePath(path);
+        //return path;
 
     }
 
@@ -233,7 +238,7 @@ public class Main {
     }
     */
 
-    private String pathVerify(String path, int entry_line, int exit_line){
+    public String pathVerify(String path, int entry_line, int exit_line, ArrayList<String> maze){
         path = this.canonizePath(path);
 
         String row = maze.get(entry_line);
@@ -254,6 +259,10 @@ public class Main {
             if (i == path_len){
                 return "Invalid path entered";
             }   
+
+            if (this.outofBounds(len, col_num, row_num, row)){
+                return "Invalid path entered";
+            }
             
             row = maze.get(row_num);
             row_above = maze.get(row_num-1);
@@ -290,8 +299,25 @@ public class Main {
     
     }
 
+    public Boolean outofBounds(int length, int col_num, int row_num, String row){
+        if (col_num < 0 || col_num >= length){
+            return true;
+        }
 
-    //pathVerify method takes in the entry line and a path given by the user and returns a boolean representing if the path is legit or not
+        else if (row_num < 0 || row_num >= length){
+            return true;
+        }
+
+        else if (row.charAt(col_num) == '#'){
+            return true;
+        }
+
+        else {
+            return false;
+        }
+    }
+
+ /*   //pathVerify method takes in the entry line and a path given by the user and returns a boolean representing if the path is legit or not
     private boolean pathVerify(String path, int row_num){
         //see pathFinder method for in-depth descriptions of variables
         String row = maze.get(row_num);
@@ -328,7 +354,7 @@ public class Main {
             /**each if statement block checks for F, R, and L chars,  
             - spaces are ignored
             - directions are followed until loop is broken
-            **/
+            
 
             if (direction == 1){
                 if (move == 'F'){
@@ -397,10 +423,10 @@ public class Main {
 
         return false; //if loop ends without finding the exit or hitting an edge case, path is invalid
     }
-
+*/
 
     //the findEntrance method looks for the entrance to the maze by iterating through the maze object, returning its index
-    private int findEntrance(){
+    private int findEntrance(ArrayList<String> maze){
         int lines = maze.size();
         int len = 0;
         int entry_line = 0;
@@ -419,7 +445,7 @@ public class Main {
         return entry_line;
     }
 
-    private int findExit(){
+    private int findExit(ArrayList<String> maze){
         int lines = maze.size();
         int len = 0;
         int exit_line = 0;
@@ -510,8 +536,12 @@ public class Main {
         Tests t = new Tests();
         t.rightTurnTest();
         t.factorizePathTest();
-        t.LeftTurnTest();
+        t.leftTurnTest();
         t.canonizePathTest();
+        t.moveForwardTest();
+        t.pathFinderTest();
+        t.pathVerifyTest();
+        t.outofBoundsTest();
 
         Options options = new Options();
         options.addOption("i", true,"Traverse the maze");
@@ -528,19 +558,20 @@ public class Main {
                 logger.info("**** Reading the maze from file", args[1]);
                 m.fileProcessor(args[1]);
 
-                int entry_line = m.findEntrance(); 
-                int exit_line = m.findExit();
+                ArrayList<String> maze = m.getMaze();
+                int entry_line = m.findEntrance(maze); 
+                int exit_line = m.findExit(maze);
 
                 if (cmd.hasOption("p")){
-                    String valid = m.pathVerify(args[3], entry_line, exit_line);
+                    String valid = m.pathVerify(args[3], entry_line, exit_line, maze);
                     System.out.println(valid);
                 }
                     
                else {
                     logger.info("**** Computing path"); //info
-                    String path = m.pathFinder(entry_line, exit_line);
-                    String factorized_path = m.factorizePath(path);
-                    System.out.println(factorized_path);
+                    String path = m.pathFinder(entry_line, exit_line, maze);
+                    //String factorized_path = m.factorizePath(path);
+                    System.out.println(/*factorized_*/path);
                 } 
             }
 
