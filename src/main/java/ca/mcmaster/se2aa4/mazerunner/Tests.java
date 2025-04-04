@@ -26,13 +26,12 @@ public class Tests {
         int row_num = 1;
 
         //NORTH
-        System.out.println("Running right turn test...");
+        System.out.println("\nRunning right turn test...");
         System.out.println("Stage 1: north");
 
         row = "##  ##";
         row_above = "######";
         row_below = "######";
-
 
         N.check_case(row, row_above, row_below, col_num, row_num);
         this.rightTurnTestRunner(N, "E");
@@ -78,6 +77,36 @@ public class Tests {
 
         else{
             System.out.printf("Test FAIL! Expected result %s, Actual result %s\n", right_direction, Direction);
+        }
+    }
+
+    public void factorizePathTest(){
+        String sample_path1 = "FFFRRRLFF";
+        String sample_answer1 = "3F3RL2F";
+
+        String sample_path2 = "RLF";
+        String sample_answer2 = "RLF";
+        
+        String sample_path3 = "LLRRF";
+        String sample_answer3 = "2L2RF";
+
+        System.out.println("\nRunning factorize path test...");
+
+        this.factorizePathTestRunner(sample_path1, sample_answer1, 1);
+        this.factorizePathTestRunner(sample_path2, sample_answer2, 2);
+        this.factorizePathTestRunner(sample_path3, sample_answer3, 3);
+    }
+
+    private void factorizePathTestRunner(String sample_path, String sample_answer, int stage){
+        System.out.printf("\nStage %d - %s\n", stage, sample_path);
+        String actual_answer = main.factorizePath(sample_path);
+
+        if (actual_answer.equals(sample_answer)){
+            System.out.printf("Test PASS! Expected result %s, Actual result %s\n", sample_answer, actual_answer);
+        }
+
+        else{
+            System.out.printf("Test FAIL! Expected result %s, Actual result %s\n", sample_answer, actual_answer);
         }
     }
 
