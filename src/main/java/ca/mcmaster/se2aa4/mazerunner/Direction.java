@@ -23,7 +23,7 @@ public abstract class Direction {
     String newdirection = "";
     int[] newcoords = {0,0};
 
-    public void make_decision(char right_tile, char front_tile){
+    public void makeDecision(char right_tile, char front_tile){
         if (right_tile == ' '){
                 this.turnRight();
             }
@@ -39,6 +39,7 @@ public abstract class Direction {
         }
     } 
 
+    //updates instance variables with new location information
     public void updateInfo(String row, String row_above, String row_below, int col_num, int row_num){
         this.row = row;
         this.row_above = row_above;
@@ -63,10 +64,11 @@ public abstract class Direction {
         return newcoords;
     }
 
-    protected void check_case(String row, String row_above, String row_below, int col_num, int row_num){
+    //template check_case method updates location information, allows subclasses to implement their own setTiles methods for right and forward tiles, and uses a set make_decision method to decide which action to take 
+    public void check_case(String row, String row_above, String row_below, int col_num, int row_num){
         this.updateInfo(row, row_above, row_below, col_num, row_num); //fixed method
         this.setTiles(); //no default method
-        this.make_decision(right_tile, front_tile); //fixed method
+        this.makeDecision(right_tile, front_tile); //fixed method
     }
 
     abstract protected void setTiles();

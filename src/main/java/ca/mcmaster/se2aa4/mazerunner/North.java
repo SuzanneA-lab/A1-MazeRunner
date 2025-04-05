@@ -12,26 +12,10 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLineParser;
 
-public class North extends Direction {
-    
+public class North extends Direction {  
     public North(){
         newdirection = "N";
     }
-
-/*    
-    public void check_case(String row, String row_above, String row_below, int col_num, int row_num){
-        this.row = row;
-        this.row_above = row_above;
-        this.row_below = row_below;
-        this.col_num = col_num;
-        this.row_num = row_num;
-
-        char right_tile = row.charAt(col_num+1);
-        char front_tile = row_above.charAt(col_num); 
-
-        this.make_decision(right_tile, front_tile);
-    }
-*/
 
     protected void setTiles(){
         right_tile = row.charAt(col_num+1);

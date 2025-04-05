@@ -41,6 +41,7 @@ public class Main {
         return maze;
     }
 
+    //pathFinder method uses direction classes to navigate through the maze using the right hand rule
     public String pathFinder(int row_num, int exit_line, ArrayList<String> maze){
         String path = "";
         String row = maze.get(row_num);
@@ -72,6 +73,7 @@ public class Main {
         return this.factorizePath(path);
     }
 
+    //takes output from get_direction method uses it to switch current direction object
     private void updateDirection(){
         if (current.get_direction().equals("N")){
             current = N;
@@ -90,6 +92,7 @@ public class Main {
         }
     }
 
+    //checks if a given path works by using direction classes to navigate through the maze using it
     public String pathVerify(String path, int entry_line, int exit_line, ArrayList<String> maze){
         path = this.canonizePath(path);
 
@@ -151,6 +154,7 @@ public class Main {
     
     }
 
+    //checks if path given to pathverify method has taken us out of the allowable bounds for the maze
     public Boolean outofBounds(int length, int col_num, int row_num, String row){
         if (col_num < 0 || col_num >= length){
             return true;
@@ -189,6 +193,7 @@ public class Main {
         return entry_line;
     }
 
+    //finds the exit of the maze by iterating through the maze, returns its index
     public int findExit(ArrayList<String> maze){
         int lines = maze.size();
         int len = 0;
@@ -244,6 +249,7 @@ public class Main {
         return factor_path;
     }
 
+    //takes in the factorized path through a maze and returns the canonical form
     public String canonizePath(String factor_path){
         int len = factor_path.length();
         String canon_path = "";
@@ -278,16 +284,7 @@ public class Main {
     //main method processes args, calls methods when appropriate and provides UI statements
     public static void main(String[] args) { 
         Tests t = new Tests();
-        t.rightTurnTest();
-        t.leftTurnTest();
-        t.moveForwardTest();
-        t.factorizePathTest();
-        t.canonizePathTest();
-        t.pathFinderTest();
-        t.pathVerifyTest();
-        t.outofBoundsTest();
-        t.findEntranceTest();
-        t.findExitTest();
+        t.runAllTests();
 
         Options options = new Options();
         options.addOption("i", true,"Traverse the maze");

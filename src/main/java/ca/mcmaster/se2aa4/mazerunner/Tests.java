@@ -19,7 +19,7 @@ public class Tests {
     Direction W = new West();
 
     //test 1
-        public void rightTurnTest(){
+        public boolean rightTurnTest(){
             String row;
             String row_above;
             String row_below;
@@ -34,7 +34,7 @@ public class Tests {
             row_below = "######";
 
             N.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(N, "E", 1, 3, "North", 1);
+            boolean a1 = this.moveTestRunner(N, "E", 1, 3, "North", 1);
 
             //EAST
             row = "## ###";
@@ -42,7 +42,7 @@ public class Tests {
             row_below = "## ###";
 
             E.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(E, "S", 2, 2, "East", 2);
+            boolean a2 = this.moveTestRunner(E, "S", 2, 2, "East", 2);
 
             //SOUTH
             row = "#  ###";
@@ -50,7 +50,7 @@ public class Tests {
             row_below = "######";
 
             S.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(S, "W", 1, 1, "South", 3);
+            boolean a3 = this.moveTestRunner(S, "W", 1, 1, "South", 3);
 
             //WEST        
             row = "## ###";
@@ -58,11 +58,19 @@ public class Tests {
             row_below = "######";
 
             W.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(W, "N", 0, 2, "West", 4);
+            boolean a4 = this.moveTestRunner(W, "N", 0, 2, "West", 4);
+
+            if (a1 == a2 && a2 == a3 && a3 == a4 && a1 == true){
+                return true;
+            }
+
+            else {
+                return false;
+            }
         }
 
     //test 2
-        public void leftTurnTest(){
+        public boolean leftTurnTest(){
             String row;
             String row_above;
             String row_below;
@@ -77,7 +85,7 @@ public class Tests {
             row_below = "######";
 
             N.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(N, "W", 1, 2, "North", 1);
+            boolean a1 = this.moveTestRunner(N, "W", 1, 2, "North", 1);
 
             //EAST
             row = "## ###";
@@ -85,7 +93,7 @@ public class Tests {
             row_below = "######";
 
             E.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(E, "N", 1, 2, "East", 2);
+            boolean a2 = this.moveTestRunner(E, "N", 1, 2, "East", 2);
 
             //SOUTH
             row = "## ###";
@@ -93,7 +101,7 @@ public class Tests {
             row_below = "######";
 
             S.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(S, "E", 1, 2, "South", 3);
+            boolean a3 = this.moveTestRunner(S, "E", 1, 2, "South", 3);
 
             //WEST        
             row = "## ###";
@@ -101,11 +109,19 @@ public class Tests {
             row_below = "######";
 
             W.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(W, "S", 1, 2, "West", 4);
+            boolean a4 = this.moveTestRunner(W, "S", 1, 2, "West", 4);
+
+            if (a1 == a2 && a2 == a3 && a3 == a4 && a1 == true){
+                return true;
+            }
+
+            else {
+                return false;
+            }
         }
 
     //test 3
-        public void moveForwardTest(){
+        public boolean moveForwardTest(){
             String row;
             String row_above;
             String row_below;
@@ -120,7 +136,7 @@ public class Tests {
             row_below = "######";
 
             N.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(N, "N", 0, 2, "North", 1);
+            boolean a1 = this.moveTestRunner(N, "N", 0, 2, "North", 1);
 
             //EAST
             row = "##  ##";
@@ -128,7 +144,7 @@ public class Tests {
             row_below = "######";
 
             E.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(E, "E", 1, 3, "East", 2);
+            boolean a2 = this.moveTestRunner(E, "E", 1, 3, "East", 2);
 
             //SOUTH
             row = "## ###";
@@ -136,7 +152,7 @@ public class Tests {
             row_below = "## ###";
 
             S.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(S, "S", 2, 2, "South", 3);
+            boolean a3 = this.moveTestRunner(S, "S", 2, 2, "South", 3);
 
             //WEST        
             row = "#  ###";
@@ -144,32 +160,42 @@ public class Tests {
             row_below = "######";
 
             W.check_case(row, row_above, row_below, col_num, row_num);
-            this.moveTestRunner(W, "W", 1, 1, "West", 4);
+            boolean a4 = this.moveTestRunner(W, "W", 1, 1, "West", 4);
+
+            if (a1 == a2 && a2 == a3 && a3 == a4 && a1 == true){
+                return true;
+            }
+
+            else {
+                return false;
+            }
         }
 
-        private void moveTestRunner(Direction current, String right_direction, int right_row_num, int right_col_num, String direction, int stage){
-        System.out.printf("\nStage %d: %s\n", stage, direction);
+        private boolean moveTestRunner(Direction current, String right_direction, int right_row_num, int right_col_num, String direction, int stage){
+            System.out.printf("\nStage %d: %s\n", stage, direction);
 
-        int[] Coords = current.getnewcoords();
-        int row_num = Coords[0];
-        int col_num = Coords[1];
-        String Direction = current.get_direction();
+            int[] Coords = current.getnewcoords();
+            int row_num = Coords[0];
+            int col_num = Coords[1];
+            String Direction = current.get_direction();
 
-        if (Direction.equals(right_direction) && row_num == right_row_num && col_num == right_col_num){
-            System.out.printf("Test PASS! Expected direction: %s, Actual direction: %s\n", right_direction, Direction);
-            System.out.printf("           Expected row number: %d, Actual row number: %d\n", right_row_num, row_num);
-            System.out.printf("           Expected column number: %d, Actual column number: %d\n", right_col_num, col_num);
-        }
+            if (Direction.equals(right_direction) && row_num == right_row_num && col_num == right_col_num){
+                System.out.printf("Test PASS! Expected direction: %s, Actual direction: %s\n", right_direction, Direction);
+                System.out.printf("           Expected row number: %d, Actual row number: %d\n", right_row_num, row_num);
+                System.out.printf("           Expected column number: %d, Actual column number: %d\n", right_col_num, col_num);
+                return true;
+            }
 
-        else{
-            System.out.printf("Test FAIL! Expected direction %s, Actual direction %s\n", right_direction, Direction);
-            System.out.printf("           Expected row number: %d, Actual row number: %d\n", right_row_num, row_num);
-            System.out.printf("           Expected column number: %d, Actual column number: %d\n", right_col_num, col_num);
-        }
+            else{
+                System.out.printf("Test FAIL! Expected direction %s, Actual direction %s\n", right_direction, Direction);
+                System.out.printf("           Expected row number: %d, Actual row number: %d\n", right_row_num, row_num);
+                System.out.printf("           Expected column number: %d, Actual column number: %d\n", right_col_num, col_num);
+                return false;
+            }
         }
 
     //test 4
-        public void factorizePathTest(){
+        public boolean factorizePathTest(){
             String sample_path1 = "FFFRRRLFF";
             String sample_answer1 = "3F3RL2F";
 
@@ -184,27 +210,37 @@ public class Tests {
 
             System.out.println("\n\nTEST 4: Running factorize path test...");
 
-            this.factorizePathTestRunner(sample_path1, sample_answer1, 1);
-            this.factorizePathTestRunner(sample_path2, sample_answer2, 2);
-            this.factorizePathTestRunner(sample_path3, sample_answer3, 3);
-            this.factorizePathTestRunner(sample_path4, sample_answer4, 4);
+            boolean a1 = this.factorizePathTestRunner(sample_path1, sample_answer1, 1);
+            boolean a2 = this.factorizePathTestRunner(sample_path2, sample_answer2, 2);
+            boolean a3 = this.factorizePathTestRunner(sample_path3, sample_answer3, 3);
+            boolean a4 = this.factorizePathTestRunner(sample_path4, sample_answer4, 4);
+
+            if (a1 == a2 && a2 == a3 && a3 == a4 && a1 == true){
+                return true;
+            }
+
+            else {
+                return false;
+            }
         }
 
-        private void factorizePathTestRunner(String sample_path, String sample_answer, int stage){
+        private boolean factorizePathTestRunner(String sample_path, String sample_answer, int stage){
             System.out.printf("\nStage %d - %s\n", stage, sample_path);
             String actual_answer = main.factorizePath(sample_path);
 
             if (actual_answer.equals(sample_answer)){
                 System.out.printf("Test PASS! Expected result: %s, Actual result %s\n", sample_answer, actual_answer);
+                return true;
             }
 
             else{
                 System.out.printf("Test FAIL! Expected result: %s, Actual result %s\n", sample_answer, actual_answer);
+                return false;
             }
         }
 
     //test 5
-        public void canonizePathTest(){
+        public boolean canonizePathTest(){
             String sample_answer1 = "FFFRRRLFF";
             String sample_path1 = "3F3RL2F";
 
@@ -219,27 +255,37 @@ public class Tests {
 
             System.out.println("\n\nTEST 5: Running canonize path test...");
 
-            this.canonizePathTestRunner(sample_path1, sample_answer1, 1);
-            this.canonizePathTestRunner(sample_path2, sample_answer2, 2);
-            this.canonizePathTestRunner(sample_path3, sample_answer3, 3);
-            this.canonizePathTestRunner(sample_path4, sample_answer4, 4);
+            boolean a1 = this.canonizePathTestRunner(sample_path1, sample_answer1, 1);
+            boolean a2 = this.canonizePathTestRunner(sample_path2, sample_answer2, 2);
+            boolean a3 = this.canonizePathTestRunner(sample_path3, sample_answer3, 3);
+            boolean a4 = this.canonizePathTestRunner(sample_path4, sample_answer4, 4);
+
+            if (a1 == a2 && a2 == a3 && a3 == a4 && a1 == true){
+                return true;
+            }
+
+            else {
+                return false;
+            }
         }
 
-        private void canonizePathTestRunner(String sample_path, String sample_answer, int stage){
+        private boolean canonizePathTestRunner(String sample_path, String sample_answer, int stage){
             System.out.printf("\nStage %d - %s\n", stage, sample_path);
             String actual_answer = main.canonizePath(sample_path);
 
             if (actual_answer.equals(sample_answer)){
                 System.out.printf("Test PASS! Expected result: %s, Actual result %s\n", sample_answer, actual_answer);
+                return true;
             }
 
             else{
                 System.out.printf("Test FAIL! Expected result: %s, Actual result %s\n", sample_answer, actual_answer);
+                return false;
             }
         }
 
     //test 6
-        public void pathFinderTest(){
+        public boolean pathFinderTest(){
             ArrayList<String> maze1 = new ArrayList<String>();
             ArrayList<String> maze2 = new ArrayList<String>();
             ArrayList<String> maze3 = new ArrayList<String>();
@@ -286,26 +332,36 @@ public class Tests {
             String real_path3 = main.pathFinder(4, 2, maze3);
             String real_path4 = main.pathFinder(1, 5, maze4);
 
-            this.pathFinderTestRunner(correct_path1, real_path1, 1, "tiny.maz");
-            this.pathFinderTestRunner(correct_path2, real_path2, 2, "straight.maz");
-            this.pathFinderTestRunner(correct_path3, real_path3, 3, "test.maz");
-            this.pathFinderTestRunner(correct_path4, real_path4, 4, "direct.maz");
+            boolean a1 = this.pathFinderTestRunner(correct_path1, real_path1, 1, "tiny.maz");
+            boolean a2 = this.pathFinderTestRunner(correct_path2, real_path2, 2, "straight.maz");
+            boolean a3 = this.pathFinderTestRunner(correct_path3, real_path3, 3, "test.maz");
+            boolean a4 = this.pathFinderTestRunner(correct_path4, real_path4, 4, "direct.maz");
+
+            if (a1 == a2 && a2 == a3 && a3 == a4 && a1 == true){
+                return true;
+            }
+
+            else {
+                return false;
+            }
         }
 
-        private void pathFinderTestRunner(String correct_path, String real_path, int stage, String maze_name){
+        private boolean pathFinderTestRunner(String correct_path, String real_path, int stage, String maze_name){
             System.out.printf("\nStage %d - %s\n", stage, maze_name);
 
             if (real_path.equals(correct_path)){
                 System.out.printf("Test PASS! Expected path: %s, Actual path %s\n", correct_path, real_path);
+                return true;
             }
 
             else{
                 System.out.printf("Test FAIL! Expected path: %s, Actual path %s\n", correct_path, real_path);
+                return false;
             }
         }
 
     //test 7
-        public void pathVerifyTest(){
+        public boolean pathVerifyTest(){
             ArrayList<String> maze = new ArrayList<String>();
             String correct_path1 = "4F";
             String correct_path2 = "FFFF";
@@ -325,26 +381,36 @@ public class Tests {
             String response_3 = main.pathVerify(incorrect_path1, 2, 2, maze);
             String response_4 = main.pathVerify(incorrect_path2, 2, 2, maze);
 
-            this.pathVerifyTestRunner("Valid path entered", response_1, 1);
-            this.pathVerifyTestRunner("Valid path entered", response_2, 2);
-            this.pathVerifyTestRunner("Invalid path entered", response_3, 3);
-            this.pathVerifyTestRunner("Invalid path entered", response_4, 4);      
+            boolean a1 = this.pathVerifyTestRunner("Valid path entered", response_1, 1);
+            boolean a2 = this.pathVerifyTestRunner("Valid path entered", response_2, 2);
+            boolean a3 = this.pathVerifyTestRunner("Invalid path entered", response_3, 3);
+            boolean a4 = this.pathVerifyTestRunner("Invalid path entered", response_4, 4);      
+
+            if (a1 == a2 && a2 == a3 && a3 == a4 && a1 == true){
+                return true;
+            }
+
+            else {
+                return false;
+            }
         }
 
-        private void pathVerifyTestRunner(String expected_response, String response, int stage){
+        private boolean pathVerifyTestRunner(String expected_response, String response, int stage){
             System.out.printf("\nStage %d - straight.maz\n", stage);
 
             if (expected_response.equals(response)){
                 System.out.printf("Test PASS! Expected response: %s, Actual response: %s\n", expected_response, response);
+                return true;
             }
 
             else{
                 System.out.printf("Test FAIL! Expected response: %s, Actual response: %s\n", expected_response, response);
+                return false;
             }
         }
 
     //test 8
-        public void outofBoundsTest(){
+        public boolean outofBoundsTest(){
             String row1 = "######";
             String row2 = " #####";
 
@@ -372,29 +438,39 @@ public class Tests {
             Boolean response5 = main.outofBounds(length, col_num2, row_num1, row2); //out of bounds
             Boolean response6 = main.outofBounds(length, col_num3, row_num1, row2); //out of bounds
 
-            this.outofBoundsTestRunner(response1, true, 1, "inside wall");
-            this.outofBoundsTestRunner(response2, false, 2, "within bounds");
-            this.outofBoundsTestRunner(response3, true, 3, "row number too low");
-            this.outofBoundsTestRunner(response4, true, 4, "row number too high");
-            this.outofBoundsTestRunner(response5, true, 5, "column number too low");
-            this.outofBoundsTestRunner(response6, true, 6, "column number too high");
+            boolean a1 = this.outofBoundsTestRunner(response1, true, 1, "inside wall");
+            boolean a2 = this.outofBoundsTestRunner(response2, false, 2, "within bounds");
+            boolean a3 = this.outofBoundsTestRunner(response3, true, 3, "row number too low");
+            boolean a4 = this.outofBoundsTestRunner(response4, true, 4, "row number too high");
+            boolean a5 = this.outofBoundsTestRunner(response5, true, 5, "column number too low");
+            boolean a6 = this.outofBoundsTestRunner(response6, true, 6, "column number too high");
+
+            if (a1 == a2 && a2 == a3 && a3 == a4 && a4 == a5 && a5 == a6 && a1 == true){
+                return true;
+            }
+
+            else {
+                return false;
+            }
 
         }
 
-        private void outofBoundsTestRunner(Boolean expected_response, Boolean response, int stage, String condition){
+        private boolean outofBoundsTestRunner(Boolean expected_response, Boolean response, int stage, String condition){
             System.out.printf("\nStage %d - %s\n", stage, condition);
 
             if (expected_response == response){
                 System.out.printf("Test PASS! Expected response: %s, Actual response: %s\n", expected_response, response);
+                return true;
             }
 
             else{
                 System.out.printf("Test FAIL! Expected response: %s, Actual response: %s\n", expected_response, response);
+                return false;
             }   
         }
 
     //test 9
-        public void findEntranceTest(){
+        public boolean findEntranceTest(){
             ArrayList<String> maze1 = new ArrayList<String>();
             ArrayList<String> maze2 = new ArrayList<String>();
             ArrayList<String> maze3 = new ArrayList<String>();
@@ -430,13 +506,21 @@ public class Tests {
             int given_entrance2 = main.findEntrance(maze2);
             int given_entrance3 = main.findEntrance(maze3);
 
-            this.findEntranceOrExitTestRunner(correct_entrance1, given_entrance1, 1, "tiny.maz");
-            this.findEntranceOrExitTestRunner(correct_entrance2, given_entrance2, 2, "straight.maz");
-            this.findEntranceOrExitTestRunner(correct_entrance3, given_entrance3, 3, "direct.maz");
+            boolean a1 = this.findEntranceOrExitTestRunner(correct_entrance1, given_entrance1, 1, "tiny.maz");
+            boolean a2 = this.findEntranceOrExitTestRunner(correct_entrance2, given_entrance2, 2, "straight.maz");
+            boolean a3 = this.findEntranceOrExitTestRunner(correct_entrance3, given_entrance3, 3, "direct.maz");
+
+            if (a1 == a2 && a2 == a3 && a1 == true){
+                return true;
+            }
+
+            else {
+                return false;
+            }
         }
 
     //test 10
-        public void findExitTest(){
+        public boolean findExitTest(){
             ArrayList<String> maze1 = new ArrayList<String>();
             ArrayList<String> maze2 = new ArrayList<String>();
             ArrayList<String> maze3 = new ArrayList<String>();
@@ -472,21 +556,57 @@ public class Tests {
             int given_exit2 = main.findExit(maze2);
             int given_exit3 = main.findExit(maze3);
 
-            this.findEntranceOrExitTestRunner(correct_exit1, given_exit1, 1, "tiny.maz");
-            this.findEntranceOrExitTestRunner(correct_exit2, given_exit2, 2, "straight.maz");
-            this.findEntranceOrExitTestRunner(correct_exit3, given_exit3, 3, "direct.maz");
+            boolean a1 = this.findEntranceOrExitTestRunner(correct_exit1, given_exit1, 1, "tiny.maz");
+            boolean a2 = this.findEntranceOrExitTestRunner(correct_exit2, given_exit2, 2, "straight.maz");
+            boolean a3 = this.findEntranceOrExitTestRunner(correct_exit3, given_exit3, 3, "direct.maz");
+
+            if (a1 == a2 && a2 == a3 && a1 == true){
+                return true;
+            }
+
+            else {
+                return false;
+            }
         }
 
-        private void findEntranceOrExitTestRunner(int correct_index, int given_index, int stage, String maze_name){
+        private boolean findEntranceOrExitTestRunner(int correct_index, int given_index, int stage, String maze_name){
             System.out.printf("\nStage %d - %s\n", stage, maze_name);
 
             if (correct_index == given_index){
                 System.out.printf("Test PASS! Expected response: %d, Actual response: %d\n", correct_index, given_index);
+                return true;
             }
         
             else{
                 System.out.printf("Test FAIL! Expected response: %d, Actual response: %d\n", correct_index, given_index);
+                return false;
             }
         }
 
+    //run all tests at once
+        public void runAllTests(){
+            boolean t1 = this.rightTurnTest();
+            boolean t2 = this.leftTurnTest();
+            boolean t3 = this.moveForwardTest();
+            boolean t4 = this.factorizePathTest();
+            boolean t5 = this.canonizePathTest();
+            boolean t6 = this.pathFinderTest();
+            boolean t7 = this.pathVerifyTest();
+            boolean t8 = this.outofBoundsTest();
+            boolean t9 = this.findEntranceTest();
+            boolean t10 = this.findExitTest();
+            boolean failure = false;
+
+            boolean[] testResults = {t1,t2,t3,t4,t5,t6,t7,t8,t9,t10};
+            for (int i=0; i<10; i++){
+                if (testResults[i] == false){
+                    System.out.printf("\nTest failure detected: test %d", i+1);
+                    failure = true;
+                }
+            }
+
+            if (!failure){
+                System.out.println("\nAll Tests passed!\n");
+            }
+        }
 }
