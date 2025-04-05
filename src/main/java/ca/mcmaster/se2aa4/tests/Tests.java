@@ -1,22 +1,12 @@
 package ca.mcmaster.se2aa4.mazerunner;
-
-import java.io.BufferedReader;
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileReader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.CommandLineParser;
 
 public class Tests {
     Main main = new Main();
-    Direction N = new North();
-    Direction S = new South();
-    Direction E = new East();
-    Direction W = new West();
+    North N = North.getInstance();
+    South S = South.getInstance();
+    East E = East.getInstance();
+    West W = West.getInstance();
 
     //test 1
         public boolean rightTurnTest(){
@@ -585,6 +575,8 @@ public class Tests {
 
     //run all tests at once
         public void runAllTests(){
+            System.out.println("\nRunning all tests...");
+
             boolean t1 = this.rightTurnTest();
             boolean t2 = this.leftTurnTest();
             boolean t3 = this.moveForwardTest();
@@ -597,6 +589,8 @@ public class Tests {
             boolean t10 = this.findExitTest();
             boolean failure = false;
 
+            System.out.println("\nAggregating result of all tests...");
+    
             boolean[] testResults = {t1,t2,t3,t4,t5,t6,t7,t8,t9,t10};
             for (int i=0; i<10; i++){
                 if (testResults[i] == false){
@@ -606,7 +600,7 @@ public class Tests {
             }
 
             if (!failure){
-                System.out.println("\nAll Tests passed!\n");
+                System.out.println("All Tests passed!\n");
             }
         }
 }

@@ -12,10 +12,10 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.CommandLineParser;
 
 public class Main {
-    Direction N = new North();
-    Direction S = new South();
-    Direction E = new East();
-    Direction W = new West();
+    North N = North.getInstance();
+    South S = South.getInstance();
+    East E = East.getInstance();
+    West W = West.getInstance();
     Direction current;
 
     //logger object is created at this stage
