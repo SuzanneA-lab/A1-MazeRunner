@@ -16,7 +16,8 @@ public class West extends Direction {
     public West(){
         newdirection = "W";
     }
-    
+
+/*   
     public void check_case(String row, String row_above, String row_below, int col_num, int row_num){
         this.row = row;
         this.row_above = row_above;
@@ -28,6 +29,12 @@ public class West extends Direction {
         char front_tile = row.charAt(col_num-1); 
 
         this.make_decision(right_tile, front_tile);
+    }
+*/
+
+    protected void setTiles(){
+        right_tile = row_above.charAt(col_num);
+        front_tile = row.charAt(col_num-1); 
     }
  
     protected void moveForward(){

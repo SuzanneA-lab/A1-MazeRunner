@@ -17,6 +17,8 @@ public abstract class Direction {
     String row;
     String row_above;
     String row_below;
+    char right_tile;
+    char front_tile;
     String path;
     String newdirection = "";
     int[] newcoords = {0,0};
@@ -37,7 +39,7 @@ public abstract class Direction {
         }
     } 
 
-    public void path_check(String row, String row_above, String row_below, int col_num, int row_num){
+    public void updateInfo(String row, String row_above, String row_below, int col_num, int row_num){
         this.row = row;
         this.row_above = row_above;
         this.row_below = row_below;
@@ -61,7 +63,13 @@ public abstract class Direction {
         return newcoords;
     }
 
-    abstract protected void check_case(String row, String row_above, String row_below, int col_num, int row_num);
+    protected void check_case(String row, String row_above, String row_below, int col_num, int row_num){
+        this.updateInfo(row, row_above, row_below, col_num, row_num); //fixed method
+        this.setTiles(); //no default method
+        this.make_decision(right_tile, front_tile); //fixed method
+    }
+
+    abstract protected void setTiles();
     abstract protected void moveForward();
     abstract protected void turnLeft();
     abstract protected void turnRight();

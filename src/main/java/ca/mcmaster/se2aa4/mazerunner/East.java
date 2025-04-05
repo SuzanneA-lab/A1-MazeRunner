@@ -17,6 +17,7 @@ public class East extends Direction {
         newdirection = "E";
     }
     
+/*
     public void check_case(String row, String row_above, String row_below, int col_num, int row_num){
         this.row = row;
         this.row_above = row_above;
@@ -29,7 +30,13 @@ public class East extends Direction {
 
         this.make_decision(right_tile, front_tile);
     }
+*/
  
+    protected void setTiles(){
+        right_tile = row_below.charAt(col_num);
+        front_tile = row.charAt(col_num+1); 
+    }
+
     protected void moveForward(){
         newdirection = "E";
         newcoords[0] = row_num;

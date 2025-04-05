@@ -121,7 +121,7 @@ public class Main {
             row_below = maze.get(row_num+1); 
             
             move = path.charAt(i);
-            current.path_check(row, row_above, row_below, col_num, row_num);
+            current.updateInfo(row, row_above, row_below, col_num, row_num);
 
             if (move == 'F'){
                 current.moveForward();
